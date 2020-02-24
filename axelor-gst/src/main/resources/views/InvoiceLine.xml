@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
+
+	<form name="invoice-line-form" title="Invoice line"
+		model="com.axelor.apps.account.db.InvoiceLine" extension="true"
+		id="gst-invoice-line-form">
+
+		<extend target="//field[@name='discountAmount']">
+			<insert position="after">
+				<field name="gstRate" colSpan="3" />
+			</insert>
+		</extend>
+
+		<extend target="//panel[@name='descriptionPanel']">
+			<insert position="before">
+				<panel name="gstDetailPanel" title="Gst Detail" colSpan="12">
+					<field name="igst" colSpan="4" />
+					<field name="sgst" colSpan="4" />
+					<field name="cgst" colSpan="4" />
+				</panel>
+			</insert>
+		</extend>
+
+		<extend target="//field[@name='taxLine']">
+			<replace>
+				<field name="gstRate" />
+			</replace>
+		</extend>
+
+		<extend target="//field[@name='product']">
+			<replace>
+				<field name="product"
+					onChange="action-group-account-invoice-line-product-onchange,action-invoice-line-set-calculate-gst"
+					form-view="product-form" grid-view="product-grid" canView="false" />
+			</replace>
+		</extend>
+
+		<extend target="//field[@name='qty']">
+			<replace>
+				<field name="qty" required="true"
+					onChange="action-group-account-invoice-line-qty-onchange,action-invoice-line-set-calculate-gst" />
+			</replace>
+		</extend>
+	</form>
+	<action-method name="action-invoice-line-set-calculate-gst">
+		<call class="com.axelor.apps.gst.web.GstInvoiceLineController"
+			method="calculateGst" />
+	</action-method>
+</object-views>
