@@ -38,23 +38,23 @@ public class GstInvoiceLineServiceImpl extends InvoiceLineProjectServiceImpl
       throws AxelorException {
     Map<String, Object> productInformation = super.fillProductInformation(invoice, invoiceLine);
     productInformation.put("gstRate", invoiceLine.getProduct().getGstRate());
+    productInformation.put("taxLine", null);
     return productInformation;
   }
 
   @Override
   public InvoiceLine calculateInvoiceLineGst(InvoiceLine invoiceLine, boolean isIgst) {
-    BigDecimal gstAmount=BigDecimal.ZERO;
+    BigDecimal gstAmount = BigDecimal.ZERO;
     BigDecimal invoiceCgst;
     gstAmount =
         invoiceLine.getExTaxTotal().multiply(invoiceLine.getGstRate()).divide(new BigDecimal(100));
 
     if (isIgst) {
-    	 invoiceLine.setIgst(gstAmount);
+      invoiceLine.setIgst(gstAmount);
     } else {
-    	 invoiceCgst = gstAmount.divide(new BigDecimal(2));
-         invoiceLine.setCgst(invoiceCgst);
-         invoiceLine.setSgst(invoiceCgst);
-     
+      invoiceCgst = gstAmount.divide(new BigDecimal(2));
+      invoiceLine.setCgst(invoiceCgst);
+      invoiceLine.setSgst(invoiceCgst);
     }
     return invoiceLine;
   }

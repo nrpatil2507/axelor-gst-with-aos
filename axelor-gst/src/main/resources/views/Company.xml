@@ -9,7 +9,7 @@
 			<insert position="after">
 				<field name="gstin" colSpan="6" />
 			</insert>
+			<attribute name="required" value="true"/>
 		</extend>
 	</form>
-
 </object-views>

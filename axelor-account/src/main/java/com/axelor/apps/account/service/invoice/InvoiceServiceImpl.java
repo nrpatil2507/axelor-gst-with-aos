@@ -228,7 +228,6 @@ public class InvoiceServiceImpl extends InvoiceRepository implements InvoiceServ
             return invoice;
           }
         };
-
     Invoice invoice1 = invoiceGenerator.generate();
     invoice1.setAdvancePaymentInvoiceSet(this.getDefaultAdvancePaymentInvoice(invoice1));
     return invoice1;

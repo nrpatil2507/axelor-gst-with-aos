@@ -8,6 +8,6 @@
 		<string name="type" selection="address.type.select"
 			title="Address type" />
 		<many-to-one name="state" ref="com.axelor.apps.gst.db.State"
-			title="State" />
+			title="State" required="true"/>
 	</entity>
 </domain-models>

@@ -16,5 +16,24 @@
 				</panel>
 			</insert>
 		</extend>
+		<extend target="//field[@name='partner']">
+		<replace>
+		<field name="partner" colSpan="3" canEdit="false"
+				readonlyIf="((operationTypeSelect == 3 || operationTypeSelect == 4) &amp;&amp; statusSelect != 1) || ((operationTypeSelect == 1 || operationTypeSelect == 2) &amp;&amp; (statusSelect != 1 || invoiceLineList.length > 0))"
+				onChange="action-invoice-group-call-on-partner"
+				onSelect="action-invoice-method-set-partner-domain" form-view="partner-form"
+				grid-view="partner-grid"/>
+		</replace>
+		</extend>
+		
 	</form>
+	<action-method name="action-invoice-method-update-gst-calculation">
+	<call class="com.axelor.apps.gst.web.GstInvoiceController" method="updateGstData"/>
+	</action-method>
+	
+	<action-group name="action-invoice-group-call-on-partner">
+	<action name="action-group-account-invoice-partner-onchange"/>
+	<action name="action-method-invoice-address-str"/>
+	<action name="action-invoice-method-update-gst-calculation"/>
+	</action-group>
 </object-views>

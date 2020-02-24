@@ -238,7 +238,6 @@ public class MoveController {
           Long.valueOf(request.getContext().get("_accountingReportId").toString());
       actionViewBuilder.domain("self.move.accountingReport.id = " + accountingReportId);
     }
-
     response.setView(actionViewBuilder.map());
   }
 

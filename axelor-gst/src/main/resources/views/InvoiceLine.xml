@@ -8,12 +8,6 @@
 		model="com.axelor.apps.account.db.InvoiceLine" extension="true"
 		id="gst-invoice-line-form">
 
-		<extend target="//field[@name='discountAmount']">
-			<insert position="after">
-				<field name="gstRate" colSpan="3" />
-			</insert>
-		</extend>
-
 		<extend target="//panel[@name='descriptionPanel']">
 			<insert position="before">
 				<panel name="gstDetailPanel" title="Gst Detail" colSpan="12">
@@ -49,4 +43,5 @@
 		<call class="com.axelor.apps.gst.web.GstInvoiceLineController"
 			method="calculateGst" />
 	</action-method>
+	
 </object-views>
