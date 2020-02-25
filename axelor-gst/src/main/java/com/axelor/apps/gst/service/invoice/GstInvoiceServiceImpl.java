@@ -31,29 +31,22 @@ public class GstInvoiceServiceImpl extends InvoiceServiceProjectImpl implements 
 
 	@Override
 	public Invoice compute(Invoice invoice) throws AxelorException {
-		BigDecimal igst = BigDecimal.ZERO, cgst = BigDecimal.ZERO, taxTotal = BigDecimal.ZERO,
-				exTaxTotal = BigDecimal.ZERO, inTaxTotal = BigDecimal.ZERO;
+		BigDecimal igst = BigDecimal.ZERO, cgst = BigDecimal.ZERO, taxTotal = BigDecimal.ZERO;
 
 		List<InvoiceLine> invoiceLineList = invoice.getInvoiceLineList();
 		if (invoiceLineList != null && !invoiceLineList.isEmpty()) {
+			
 			for (InvoiceLine invoiceLine : invoiceLineList) {
 				igst = igst.add(invoiceLine.getIgst());
 				cgst = cgst.add(invoiceLine.getCgst());
-				exTaxTotal = exTaxTotal.add(invoiceLine.getExTaxTotal());
-				inTaxTotal = inTaxTotal.add(invoiceLine.getInTaxTotal());
 			}
+			invoice=super.compute(invoice);
 		}
 		taxTotal = taxTotal.add(igst).add(cgst).add(cgst);
 		invoice.setNetIgst(igst.setScale(2));
 		invoice.setNetSgst(cgst.setScale(2));
 		invoice.setNetCgst(cgst.setScale(2));
-
-		invoice.setExTaxTotal(exTaxTotal.setScale(2));
-		invoice.setInTaxTotal(inTaxTotal.setScale(2));
 		invoice.setTaxTotal(taxTotal.setScale(2));
-
-		invoice.setCompanyExTaxTotal(exTaxTotal.setScale(2));
-		invoice.setCompanyInTaxTotal(inTaxTotal.setScale(2));
 		invoice.setCompanyTaxTotal(taxTotal.setScale(2));
 		return invoice;
 	}
