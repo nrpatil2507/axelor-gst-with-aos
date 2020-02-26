@@ -48,7 +48,6 @@ public class GstInvoiceLineServiceImpl extends InvoiceLineProjectServiceImpl
     BigDecimal invoiceCgst;
     gstAmount =
         invoiceLine.getExTaxTotal().multiply(invoiceLine.getGstRate()).divide(new BigDecimal(100));
-
     if (isIgst) {
       invoiceLine.setIgst(gstAmount);
     } else {

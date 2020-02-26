@@ -2,6 +2,8 @@ package com.axelor.apps.gst.web;
 
 import com.axelor.apps.account.db.Invoice;
 import com.axelor.apps.account.db.InvoiceLine;
+import com.axelor.apps.base.db.Product;
+import com.axelor.apps.base.db.repo.ProductRepository;
 import com.axelor.apps.gst.service.invoice.GstInvoiceService;
 import com.axelor.apps.gst.service.invoice.GstInvoiceServiceImpl;
 import com.axelor.exception.AxelorException;
@@ -14,6 +16,7 @@ import java.util.List;
 
 public class GstInvoiceController {
   @Inject GstInvoiceService gstInvoiceService;
+  @Inject ProductRepository productRepo;
 
   public void updateGstData(ActionRequest request, ActionResponse response) throws AxelorException {
     Invoice invoice = request.getContext().asType(Invoice.class);
@@ -21,8 +24,23 @@ public class GstInvoiceController {
     invoiceLineList = gstInvoiceService.updateGst(invoice);
     invoice = Beans.get(GstInvoiceServiceImpl.class).compute(invoice);
     response.setValue("invoiceLineList", invoiceLineList);
-    response.setValue("netIgst", invoice.getNetIgst());
-    response.setValue("netCgst", invoice.getNetCgst());
-    response.setValue("netSgst", invoice.getNetSgst());
+    response.setValues(invoice);
+  }
+
+  @SuppressWarnings("unchecked")
+  public void getSeletedProducts(ActionRequest request, ActionResponse response) {
+    List<Integer> productIdList = (List<Integer>) request.getContext().get("productIds");
+    if (productIdList != null) {
+      List<InvoiceLine> invoiceLineList = new ArrayList<>();
+      for (Integer ProductId : productIdList) {
+        Product product = productRepo.find(ProductId.longValue());
+        System.out.println(product);
+        InvoiceLine invoiceLine = new InvoiceLine();
+        invoiceLine.setProduct(product);
+        invoiceLine = gstInvoiceService.setSelectedProductInvoice(invoiceLine);
+        invoiceLineList.add(invoiceLine);
+      }
+      response.setValue("invoiceLineList", invoiceLineList);
+    }
   }
 }
