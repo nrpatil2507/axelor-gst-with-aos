@@ -1,13 +1,17 @@
 package com.axelor.apps.gst.web;
 
+import com.axelor.apps.ReportFactory;
 import com.axelor.apps.account.db.Invoice;
 import com.axelor.apps.account.db.InvoiceLine;
 import com.axelor.apps.base.db.Product;
 import com.axelor.apps.base.db.repo.ProductRepository;
+import com.axelor.apps.gst.report.IReport;
 import com.axelor.apps.gst.service.invoice.GstInvoiceService;
 import com.axelor.apps.gst.service.invoice.GstInvoiceServiceImpl;
+import com.axelor.apps.report.engine.ReportSettings;
 import com.axelor.exception.AxelorException;
 import com.axelor.inject.Beans;
+import com.axelor.meta.schema.actions.ActionView;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.google.inject.Inject;
@@ -25,6 +29,18 @@ public class GstInvoiceController {
     invoice = Beans.get(GstInvoiceServiceImpl.class).compute(invoice);
     response.setValue("invoiceLineList", invoiceLineList);
     response.setValues(invoice);
+  }
+
+  public void printInvoice(ActionRequest request, ActionResponse response) throws AxelorException {
+    Invoice invoice = request.getContext().asType(Invoice.class);
+    String name = invoice.getInvoiceId();
+    String fileLink =
+        ReportFactory.createReport(IReport.GST_INVOICE_REPORT, name + "-${date}")
+            .addParam("InvoiceId", invoice.getId())
+            .addParam("Locale", ReportSettings.getPrintingLocale(null))
+            .generate()
+            .getFileLink();
+    response.setView(ActionView.define(name).add("html", fileLink).map());
   }
 
   @SuppressWarnings("unchecked")

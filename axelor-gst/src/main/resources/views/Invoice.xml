@@ -24,11 +24,26 @@
 					form-view="partner-form" grid-view="partner-grid" />
 			</replace>
 		</extend>
+		
+		<extend target="//button[@name='reportsBtn']">
+		<insert position="after">
+		<button name="printBtn" title="Print Invoice" icon="fa-print" onClick="action-invoice-method-print-invoice" showIf="id"/>
+		</insert>
+		</extend>
 
 	</form>
 	<action-method name="action-invoice-method-update-gst-calculation">
 		<call class="com.axelor.apps.gst.web.GstInvoiceController"
 			method="updateGstData" />
+	</action-method>
+	
+	<action-method name="action-invoice-method-set-selected-product-in-invoice">
+		<call class="com.axelor.apps.gst.web.GstInvoiceController"
+			method="getSeletedProducts" />
+	</action-method>
+	
+	<action-method name="action-invoice-method-print-invoice">
+	<call class="com.axelor.apps.gst.web.GstInvoiceController" method="printInvoice"/>
 	</action-method>
 
 	<action-group name="action-invoice-group-call-on-partner">
@@ -36,11 +51,6 @@
 		<action name="action-method-invoice-address-str" />
 		<action name="action-invoice-method-update-gst-calculation" />
 	</action-group>
-
-	<action-method name="action-invoice-method-set-selected-product-in-invoice">
-		<call class="com.axelor.apps.gst.web.GstInvoiceController"
-			method="getSeletedProducts" />
-	</action-method>
 
 	<action-group name="action-account-invoice-onnew-group"
 		id="gst-action-invoice">

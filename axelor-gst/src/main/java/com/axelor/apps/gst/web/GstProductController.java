@@ -2,6 +2,7 @@ package com.axelor.apps.gst.web;
 
 import com.axelor.apps.ReportFactory;
 import com.axelor.apps.account.db.Invoice;
+import com.axelor.apps.gst.report.IReport;
 import com.axelor.exception.AxelorException;
 import com.axelor.meta.schema.actions.ActionView;
 import com.axelor.rpc.ActionRequest;
@@ -20,8 +21,8 @@ public class GstProductController {
       productIds = Joiner.on(",").join(lstSelectedProduct);
     }
     String fileLink =
-        ReportFactory.createReport("Products_Report.rptdesign", "Products Detail" + "-${date}")
-            .addParam("ProductIds", productIds)
+        ReportFactory.createReport(IReport.GST_PRODUCT_REPORT, "Products Detail" + "-${date}")
+            .addParam("Products", productIds)
             .generate()
             .getFileLink();
     response.setView(ActionView.define("Product-details").add("html", fileLink).map());

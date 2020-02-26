@@ -26,7 +26,7 @@
 		</extend>
 		<extend target="//button[@name='printReport']">
 		<insert position="after">
-		<button name="invoiceBtn" icon="fa fa-files-o" title="Generate Invoice" onClick="action-product-method-get-selected-product-to-set-invoice"/>
+		<button name="invoiceBtn" icon="fa-files-o" title="Generate Invoice" onClick="action-product-method-get-selected-product-to-set-invoice"/>
 		</insert>
 		</extend>
 	</grid>
