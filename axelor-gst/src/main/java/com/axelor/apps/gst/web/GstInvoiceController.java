@@ -27,8 +27,8 @@ public class GstInvoiceController {
     List<InvoiceLine> invoiceLineList = new ArrayList<>();
     invoiceLineList = gstInvoiceService.updateGst(invoice);
     invoice = Beans.get(GstInvoiceServiceImpl.class).compute(invoice);
-    response.setValue("invoiceLineList", invoiceLineList);
     response.setValues(invoice);
+    response.setValue("invoiceLineList", invoiceLineList);
   }
 
   public void printInvoice(ActionRequest request, ActionResponse response) throws AxelorException {

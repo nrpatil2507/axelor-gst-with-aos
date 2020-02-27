@@ -3,24 +3,29 @@ package com.axelor.apps.gst.web;
 import com.axelor.apps.account.db.Invoice;
 import com.axelor.apps.account.db.InvoiceLine;
 import com.axelor.apps.gst.service.invoice.GstInvoiceLineService;
+import com.axelor.common.StringUtils;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.google.inject.Inject;
 
 public class GstInvoiceLineController {
 
-  @Inject GstInvoiceLineService gstInvoiceLineService;
+	@Inject
+	GstInvoiceLineService gstInvoiceLineService;
 
-  public void calculateGst(ActionRequest request, ActionResponse response) {
-    InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
-    Invoice invoice = request.getContext().getParent().asType(Invoice.class);
+	public void calculateGst(ActionRequest request, ActionResponse response) {
+		InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
+		Invoice invoice = invoiceLine.getInvoice();
+		Boolean isIgst = null;
 
-    Boolean isIgst =
-        !invoice.getAddress().getState().equals(invoice.getCompany().getAddress().getState())
-            ? true
-            : false;
+		if (invoice.getAddress().getState().getName()!=null) {
+			isIgst = !invoice.getAddress().getState().equals(invoice.getCompany().getAddress().getState()) ? true
+					: false;
+			invoiceLine = gstInvoiceLineService.calculateInvoiceLineGst(invoiceLine, isIgst);
 
-    invoiceLine = gstInvoiceLineService.calculateInvoiceLineGst(invoiceLine, isIgst);
-    response.setValues(invoiceLine);
-  }
+		} else {
+			response.setError("pls enter state in address");
+		}
+		response.setValues(invoiceLine);
+	}
 }

@@ -152,7 +152,6 @@ public class InvoicePrintServiceImpl implements InvoicePrintService {
           I18n.get(IExceptionMessage.INVOICES_MISSING_PRINTING_SETTINGS),
           invalidPrintSettingsInvoiceIds.toString());
     }
-
     ModelTool.apply(
         Invoice.class,
         ids,

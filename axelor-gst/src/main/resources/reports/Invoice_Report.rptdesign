@@ -1026,19 +1026,11 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                                 </text>
                             </cell>
                             <cell id="31">
-                                <data id="222">
+                                <text id="276">
                                     <property name="fontSize">12pt</property>
-                                    <property name="dataSet">InvoiceDS</property>
-                                    <list-property name="boundDataColumns">
-                                        <structure>
-                                            <property name="name">invoice_date</property>
-                                            <text-property name="displayName">invoice_date</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["invoice_date"]</expression>
-                                            <property name="dataType">date</property>
-                                        </structure>
-                                    </list-property>
-                                    <property name="resultSetColumn">invoice_date</property>
-                                </data>
+                                    <property name="contentType">html</property>
+                                    <text-property name="content"><![CDATA[<VALUE-OF>row["invoice_date"]</VALUE-OF>]]></text-property>
+                                </text>
                             </cell>
                         </row>
                         <row id="32">
@@ -1075,19 +1067,11 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                                 </text>
                             </cell>
                             <cell id="34">
-                                <data id="223">
+                                <text id="277">
                                     <property name="fontSize">12pt</property>
-                                    <property name="dataSet">InvoiceDS</property>
-                                    <list-property name="boundDataColumns">
-                                        <structure>
-                                            <property name="name">invoice_id</property>
-                                            <text-property name="displayName">invoice_id</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["invoice_id"]</expression>
-                                            <property name="dataType">string</property>
-                                        </structure>
-                                    </list-property>
-                                    <property name="resultSetColumn">invoice_id</property>
-                                </data>
+                                    <property name="contentType">html</property>
+                                    <text-property name="content"><![CDATA[<VALUE-OF>row["invoice_id"]</VALUE-OF>]]></text-property>
+                                </text>
                             </cell>
                         </row>
                     </grid>
@@ -1168,10 +1152,11 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                                 <property name="borderBottomColor">#808080</property>
                                 <property name="borderBottomStyle">solid</property>
                                 <property name="borderBottomWidth">thin</property>
-                                <data id="235">
+                                <text id="271">
                                     <property name="fontSize">12pt</property>
-                                    <property name="resultSetColumn">name</property>
-                                </data>
+                                    <property name="contentType">html</property>
+                                    <text-property name="content"><![CDATA[<VALUE-OF>row["name"]</VALUE-OF>]]></text-property>
+                                </text>
                             </cell>
                         </row>
                         <row id="45">
@@ -1208,43 +1193,19 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                                 </text>
                             </cell>
                             <cell id="47">
-                                <data id="209">
+                                <text id="272">
                                     <property name="fontSize">12pt</property>
-                                    <property name="dataSet">PartnerDS</property>
-                                    <list-property name="boundDataColumns">
-                                        <structure>
-                                            <property name="name">addressl4</property>
-                                            <text-property name="displayName">addressl4</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["addressl4"]</expression>
-                                            <property name="dataType">string</property>
-                                        </structure>
-                                    </list-property>
-                                    <property name="resultSetColumn">addressl4</property>
-                                </data>
-                                <data id="210">
-                                    <property name="dataSet">PartnerDS</property>
-                                    <list-property name="boundDataColumns">
-                                        <structure>
-                                            <property name="name">zip</property>
-                                            <text-property name="displayName">zip</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["zip"]</expression>
-                                            <property name="dataType">string</property>
-                                        </structure>
-                                    </list-property>
-                                    <property name="resultSetColumn">zip</property>
-                                </data>
-                                <data id="211">
-                                    <property name="dataSet">PartnerDS</property>
-                                    <list-property name="boundDataColumns">
-                                        <structure>
-                                            <property name="name">city</property>
-                                            <text-property name="displayName">city</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["city"]</expression>
-                                            <property name="dataType">decimal</property>
-                                        </structure>
-                                    </list-property>
-                                    <property name="resultSetColumn">city</property>
-                                </data>
+                                    <property name="contentType">html</property>
+                                    <text-property name="content"><![CDATA[<VALUE-OF>row["addressl4"]</VALUE-OF>]]></text-property>
+                                </text>
+                                <text id="273">
+                                    <property name="contentType">html</property>
+                                    <text-property name="content"><![CDATA[<VALUE-OF>row["city"]</VALUE-OF>]]></text-property>
+                                </text>
+                                <text id="274">
+                                    <property name="contentType">html</property>
+                                    <text-property name="content"><![CDATA[<VALUE-OF>row["zip"]</VALUE-OF>]]></text-property>
+                                </text>
                             </cell>
                         </row>
                     </grid>
@@ -2034,19 +1995,10 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                                 <property name="borderRightWidth">thin</property>
                                 <property name="borderTopStyle">solid</property>
                                 <property name="borderTopWidth">thin</property>
-                                <data id="221">
-                                    <property name="fontSize">12pt</property>
-                                    <property name="dataSet">InvoiceDS</property>
-                                    <list-property name="boundDataColumns">
-                                        <structure>
-                                            <property name="name">totalnetamount</property>
-                                            <text-property name="displayName">totalnetamount</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["totalnetamount"]</expression>
-                                            <property name="dataType">decimal</property>
-                                        </structure>
-                                    </list-property>
-                                    <property name="resultSetColumn">totalnetamount</property>
-                                </data>
+                                <text id="268">
+                                    <property name="contentType">html</property>
+                                    <text-property name="content"><![CDATA[<VALUE-OF>row["totalnetamount"]</VALUE-OF>]]></text-property>
+                                </text>
                             </cell>
                         </row>
                         <row id="198">
@@ -2098,10 +2050,10 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                                 <property name="borderRightWidth">thin</property>
                                 <property name="borderTopStyle">solid</property>
                                 <property name="borderTopWidth">thin</property>
-                                <data id="231">
-                                    <property name="fontSize">12pt</property>
-                                    <property name="resultSetColumn">totaltax</property>
-                                </data>
+                                <text id="269">
+                                    <property name="contentType">html</property>
+                                    <text-property name="content"><![CDATA[<VALUE-OF>row["totaltax"]</VALUE-OF>]]></text-property>
+                                </text>
                             </cell>
                         </row>
                         <row id="201">
@@ -2153,19 +2105,10 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                                 <property name="borderRightWidth">thin</property>
                                 <property name="borderTopStyle">solid</property>
                                 <property name="borderTopWidth">thin</property>
-                                <data id="220">
-                                    <property name="fontSize">12pt</property>
-                                    <property name="dataSet">InvoiceDS</property>
-                                    <list-property name="boundDataColumns">
-                                        <structure>
-                                            <property name="name">totalgross</property>
-                                            <text-property name="displayName">totalgross</text-property>
-                                            <expression name="expression" type="javascript">dataSetRow["totalgross"]</expression>
-                                            <property name="dataType">decimal</property>
-                                        </structure>
-                                    </list-property>
-                                    <property name="resultSetColumn">totalgross</property>
-                                </data>
+                                <text id="270">
+                                    <property name="contentType">html</property>
+                                    <text-property name="content"><![CDATA[<VALUE-OF>row["totalgross"]</VALUE-OF>]]></text-property>
+                                </text>
                             </cell>
                         </row>
                     </grid>
