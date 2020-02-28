@@ -9,13 +9,13 @@
 		onNew="default-address-record" width="large" extension="true">
 		<extend target="//field[@name='zip']">
 			<insert position="after">
-				<field name="state" form-view="state-form" required="true" />
+				<field name="state" form-view="state-form" required="true" if="__config__.app.isApp('gst')"/>
 			</insert>
 		</extend>
 
 		<extend target="//field[@name='addressL7Country']">
 			<insert position="before">
-				<field name="type" />
+				<field name="type" if="__config__.app.isApp('gst')" />
 			</insert>
 		</extend>
 	</form>

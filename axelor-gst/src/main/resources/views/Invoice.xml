@@ -6,29 +6,70 @@
 	<form name="invoice-form" title="Invoice"
 		model="com.axelor.apps.account.db.Invoice" id="gst-invoice-form"
 		extension="true">
-		<extend target="//panel-tabs[@name='mainPanelTab']">
-			<insert position="after">
-				<panel name="gstDetailPanel" title="Gst Detail" showTitle="false"
+		<extend target="//field[@name='inTaxTotal']">
+			<replace>
+				<field name="inTaxTotal" css="order-subtotal" showTitle="false"
 					colSpan="12" if="__config__.app.isApp('gst')">
-					<field name="netIgst" colSpan="4" />
-					<field name="netSgst" colSpan="4" />
-					<field name="netCgst" colSpan="4" />
-				</panel>
-			</insert>
+					<viewer depends="exTaxTotal,currency.symbol,netIgst,netCgst,netSgst"><![CDATA[
+		         <dl class="dl-horizontal">
+		           <dt x-translate>Total W.T.</dt>
+		           <dd>{{record.exTaxTotal}} {{record.currency.symbol}}</dd>
+		           <dt x-translate>Total IGST</dt>
+		           <dd>{{record.netIgst}} {{record.currency.symbol}}</dd>
+ <dt x-translate>Total SGST</dt>
+		           <dd>{{record.netSgst}} {{record.currency.symbol}}</dd>
+ <dt x-translate>Total CGST</dt>
+		           <dd>{{record.netCgst}} {{record.currency.symbol}}</dd>
+		           <dt class="order-subtotal-total" x-translate>Total A.T.I.</dt>
+		           <dd class="order-subtotal-total">{{record.inTaxTotal}} {{record.currency.symbol}}</dd>
+		         </dl>]]>
+				</viewer>
+				</field>
+			</replace>
+		</extend>
+		<extend target="//field[@name='inTaxTotal']">
+			<replace>
+				<field name="companyInTaxTotal" showTitle="false" colSpan="12"
+					css="order-subtotal" if="__config__.app.isApp('gst')">
+					<viewer
+						depends="companyExTaxTotal,company.currency.symbol,companyInTaxTotal,companyInTaxTotalRemaining,netIgst,netCgst,netSgst"><![CDATA[
+		         <dl class="dl-horizontal">
+		           <dt x-translate>Total W.T.</dt>
+		           <dd>{{record.companyExTaxTotal}} {{record.company.currency.symbol}}</dd>
+		           <dt x-translate>Total IGST</dt>
+		           <dd>{{record.netIgst}} {{record.currency.symbol}}</dd>
+ <dt x-translate>Total SGST</dt>
+		           <dd>{{record.netSgst}} {{record.currency.symbol}}</dd>
+ <dt x-translate>Total CGST</dt>
+		           <dd>{{record.netCgst}} {{record.currency.symbol}}</dd>
+		           <dt class="order-subtotal-total" x-translate>Total A.T.I.</dt>
+		           <dd class="order-subtotal-total">{{record.companyInTaxTotal}} {{record.company.currency.symbol}}</dd>
+					<dt x-translate>Total Amount Remaining</dt>
+		           <dd class="order-subtotal-total">{{record.companyInTaxTotalRemaining}} {{record.company.currency.symbol}}</dd>
+		         </dl>
+		       ]]></viewer>
+				</field>
+			</replace>
 		</extend>
 		<extend target="//field[@name='partner']">
 			<replace>
 				<field name="partner" colSpan="3" canEdit="false"
 					readonlyIf="((operationTypeSelect == 3 || operationTypeSelect == 4) &amp;&amp; statusSelect != 1) || ((operationTypeSelect == 1 || operationTypeSelect == 2) &amp;&amp; (statusSelect != 1 || invoiceLineList.length > 0))"
-					onChange="action-invoice-group-call-on-partner" onSelect="action-invoice-method-set-partner-domain"
+					onChange="save,action-invoice-group-call-on-partner" onSelect="action-invoice-method-set-partner-domain"
 					form-view="partner-form" grid-view="partner-grid" />
 			</replace>
 		</extend>
 		
+		<extend target="//panel[@name='invoiceTaxPanel']">
+			<attribute name="hidden" value="true"  />
+		</extend>
+
 		<extend target="//button[@name='reportsBtn']">
-		<insert position="after">
-		<button name="printBtn" title="Print Invoice" icon="fa-print" onClick="action-invoice-method-print-invoice" showIf="id"/>
-		</insert>
+			<insert position="after">
+				<button name="printBtn" title="Print Invoice" icon="fa-print"
+					onClick="action-invoice-method-print-invoice" showIf="id"
+					if="__config__.app.isApp('gst')" />
+			</insert>
 		</extend>
 
 	</form>
@@ -36,20 +77,21 @@
 		<call class="com.axelor.apps.gst.web.GstInvoiceController"
 			method="updateGstData" />
 	</action-method>
-	
+
 	<action-method name="action-invoice-method-set-selected-product-in-invoice">
 		<call class="com.axelor.apps.gst.web.GstInvoiceController"
 			method="getSeletedProducts" />
 	</action-method>
-	
+
 	<action-method name="action-invoice-method-print-invoice">
-	<call class="com.axelor.apps.gst.web.GstInvoiceController" method="printInvoice"/>
+		<call class="com.axelor.apps.gst.web.GstInvoiceController"
+			method="printInvoice" if="__config__.app.isApp('gst')" />
 	</action-method>
 
 	<action-group name="action-invoice-group-call-on-partner">
 		<action name="action-group-account-invoice-partner-onchange" />
 		<action name="action-method-invoice-address-str" />
-		<action name="action-invoice-method-update-gst-calculation" />
+		<action name="action-invoice-method-update-gst-calculation" if="__config__.app.isApp('gst')" />
 	</action-group>
 
 	<action-group name="action-account-invoice-onnew-group"
@@ -70,6 +112,7 @@
 		<action
 			name="action-invoice-record-load-dummy-field-payment-voucher-on-invoice" />
 		<action name="action-invoice-record-set-dummy-field-language" />
-		<action name="action-invoice-method-set-selected-product-in-invoice" />
+		<action name="action-invoice-method-set-selected-product-in-invoice"
+			if="__config__.app.isApp('gst')" />
 	</action-group>
 </object-views>

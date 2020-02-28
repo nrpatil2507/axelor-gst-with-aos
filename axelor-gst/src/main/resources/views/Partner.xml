@@ -8,7 +8,7 @@
 		<extend target="//field[@name='name']">
 			<insert position="after">
 				<field name="gstin" showTitle="false" css="highlight"
-					placeholder="Gstin" />
+					placeholder="Gstin"  if="__config__.app.isApp('gst')"/>
 			</insert>
 		</extend>
 	</form>

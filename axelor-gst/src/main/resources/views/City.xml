@@ -7,7 +7,7 @@
 		width="large" id="gst-city-form" extension="true">
 		<extend target="//field[@name='country']">
 			<insert position="before">
-				<field name="state" form-view="state-form" required="true"/>
+				<field name="state" form-view="state-form" required="true" if="__config__.app.isApp('gst')"/>
 			</insert>
 		</extend>
 	</form>

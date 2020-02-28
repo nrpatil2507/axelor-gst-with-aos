@@ -4,13 +4,13 @@
 	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
 
 	<form name="state-form" title="State" model="com.axelor.apps.gst.db.State">
-		<panel title="State Detail" name="stateDetailPanel">
+		<panel title="State Detail" name="stateDetailPanel" if="__config__.app.isApp('gst')">
 			<field name="name"/>
-			<field name="country" />
+			<field name="country"  />
 		</panel>
 	</form>
-	<grid name="state-grid" title="States" model="com.axelor.apps.gst.db.State">
-		<field name="name"/>
-		<field name="country"/>
+	<grid name="state-grid" title="States" model="com.axelor.apps.gst.db.State" >
+		<field name="name" if="__config__.app.isApp('gst')"/>
+		<field name="country" if="__config__.app.isApp('gst')"/>
 	</grid>
 </object-views>

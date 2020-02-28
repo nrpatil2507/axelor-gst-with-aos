@@ -7,7 +7,7 @@
 		id="gst-company-form" extension="true">
 		<extend target="//field[@name='address']">
 			<insert position="after">
-				<field name="gstin" colSpan="6" />
+				<field name="gstin" colSpan="6" if="__config__.app.isApp('gst')" />
 			</insert>
 			<attribute name="required" value="true"/>
 		</extend>

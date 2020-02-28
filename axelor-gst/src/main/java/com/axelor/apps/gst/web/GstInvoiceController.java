@@ -7,10 +7,8 @@ import com.axelor.apps.base.db.Product;
 import com.axelor.apps.base.db.repo.ProductRepository;
 import com.axelor.apps.gst.report.IReport;
 import com.axelor.apps.gst.service.invoice.GstInvoiceService;
-import com.axelor.apps.gst.service.invoice.GstInvoiceServiceImpl;
 import com.axelor.apps.report.engine.ReportSettings;
 import com.axelor.exception.AxelorException;
-import com.axelor.inject.Beans;
 import com.axelor.meta.schema.actions.ActionView;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
@@ -24,11 +22,14 @@ public class GstInvoiceController {
 
   public void updateGstData(ActionRequest request, ActionResponse response) throws AxelorException {
     Invoice invoice = request.getContext().asType(Invoice.class);
-    List<InvoiceLine> invoiceLineList = new ArrayList<>();
+     List<InvoiceLine> invoiceLineList = new ArrayList<>();
     invoiceLineList = gstInvoiceService.updateGst(invoice);
-    invoice = Beans.get(GstInvoiceServiceImpl.class).compute(invoice);
-    response.setValues(invoice);
-    response.setValue("invoiceLineList", invoiceLineList);
+    response.setValue("invoiceLineList",invoiceLineList);
+    response.setValue("netIgst",invoice.getNetIgst());
+    response.setValue("netSgst",invoice.getNetSgst());
+    response.setValue("netCgst",invoice.getNetCgst());
+    response.setValue("companyInTaxTotal",invoice.getCompanyInTaxTotal());
+    response.setValue("companyInTaxTotalRemaining",invoice.getCompanyInTaxTotalRemaining());
   }
 
   public void printInvoice(ActionRequest request, ActionResponse response) throws AxelorException {

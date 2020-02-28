@@ -19,6 +19,9 @@ public class GstProductController {
 
     if (lstSelectedProduct != null) {
       productIds = Joiner.on(",").join(lstSelectedProduct);
+    }else
+    {
+    	response.setError("pls select any product.");
     }
     String fileLink =
         ReportFactory.createReport(IReport.GST_PRODUCT_REPORT, "Products Detail" + "-${date}")

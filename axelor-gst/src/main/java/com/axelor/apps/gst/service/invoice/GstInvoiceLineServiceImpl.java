@@ -57,4 +57,19 @@ public class GstInvoiceLineServiceImpl extends InvoiceLineProjectServiceImpl
     }
     return invoiceLine;
   }
+
+  @Override
+  public boolean checkIsState(Invoice invoice) {
+
+    if (invoice.getAddress() != null
+        && invoice.getAddress().getState() != null
+        && invoice.getCompany().getAddress() != null
+        && invoice.getCompany().getAddress().getState() != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+ 
 }
