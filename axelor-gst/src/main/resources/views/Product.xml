@@ -22,7 +22,9 @@
 	<grid name="product-grid" title="Products" model="com.axelor.apps.base.db.Product"
 		orderBy="code,name" x-row-height="80" extension="true" id="gst-prodcut-grid">
 		<extend target="//button[@name='printReport']">
-			<attribute name="onClick" value="action-product-method-generate-report"/>
+		<replace>
+		<button name="printReport" title="Print" icon="fa-print" onClick="action-product-method-generate-report" if="__config__.app.isApp('gst')"/>
+		</replace>
 		</extend>
 		<extend target="//button[@name='printReport']">
 		<insert position="after">

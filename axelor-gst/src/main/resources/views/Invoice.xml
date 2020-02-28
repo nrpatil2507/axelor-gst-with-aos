@@ -27,7 +27,7 @@
 				</field>
 			</replace>
 		</extend>
-		<extend target="//field[@name='inTaxTotal']">
+		<extend target="//field[@name='companyInTaxTotal']">
 			<replace>
 				<field name="companyInTaxTotal" showTitle="false" colSpan="12"
 					css="order-subtotal" if="__config__.app.isApp('gst')">
@@ -55,13 +55,18 @@
 			<replace>
 				<field name="partner" colSpan="3" canEdit="false"
 					readonlyIf="((operationTypeSelect == 3 || operationTypeSelect == 4) &amp;&amp; statusSelect != 1) || ((operationTypeSelect == 1 || operationTypeSelect == 2) &amp;&amp; (statusSelect != 1 || invoiceLineList.length > 0))"
-					onChange="save,action-invoice-group-call-on-partner" onSelect="action-invoice-method-set-partner-domain"
+					onChange="action-invoice-group-call-on-partner" onSelect="action-invoice-method-set-partner-domain"
 					form-view="partner-form" grid-view="partner-grid" />
 			</replace>
 		</extend>
 		
 		<extend target="//panel[@name='invoiceTaxPanel']">
-			<attribute name="hidden" value="true"  />
+		<replace>
+			<panel name="invoiceTaxPanel" title="Tax" showTitle="false" hideIf="gstRate" if="__config__.app.isApp('gst')">
+				<panel-related name="invoiceLineTaxListPanel" field="invoiceLineTaxList"
+					colSpan="12" form-view="invoice-line-tax-form" grid-view="invoice-line-tax-grid" />
+			</panel>
+			</replace>
 		</extend>
 
 		<extend target="//button[@name='reportsBtn']">
