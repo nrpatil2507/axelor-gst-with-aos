@@ -59,13 +59,14 @@
 					form-view="partner-form" grid-view="partner-grid" />
 			</replace>
 		</extend>
-		
+
 		<extend target="//panel[@name='invoiceTaxPanel']">
-		<replace>
-			<panel name="invoiceTaxPanel" title="Tax" showTitle="false" hideIf="gstRate" if="__config__.app.isApp('gst')">
-				<panel-related name="invoiceLineTaxListPanel" field="invoiceLineTaxList"
-					colSpan="12" form-view="invoice-line-tax-form" grid-view="invoice-line-tax-grid" />
-			</panel>
+			<replace>
+				<panel name="invoiceTaxPanel" title="Tax" showTitle="false"
+					hideIf="netIgst" if="__config__.app.isApp('gst')">
+					<panel-related name="invoiceLineTaxListPanel" field="invoiceLineTaxList"
+						colSpan="12" form-view="invoice-line-tax-form" grid-view="invoice-line-tax-grid" />
+				</panel>
 			</replace>
 		</extend>
 

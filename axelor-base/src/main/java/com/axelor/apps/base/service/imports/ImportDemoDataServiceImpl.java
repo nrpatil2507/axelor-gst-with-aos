@@ -55,7 +55,8 @@ public class ImportDemoDataServiceImpl implements ImportDemoDataService {
 
   @Inject private MetaModuleRepository metaModuleRepo;
 
-  @Override
+  @SuppressWarnings("resource")
+@Override
   public boolean importDemoDataExcel(File excelFile, File logFile)
       throws FileNotFoundException, IOException, AxelorException, ParseException,
           ClassNotFoundException {
@@ -237,7 +238,7 @@ public class ImportDemoDataServiceImpl implements ImportDemoDataService {
     }
     return true;
   }
-
+  
   private String[] getImportDetailsFromSheet(Sheet sheet) throws AxelorException {
     String[] importDetails = new String[3];
     Row moduleRow = sheet.getRow(0);

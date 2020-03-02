@@ -1330,9 +1330,22 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                     <expression name="expression" type="javascript">dataSetRow["cgst"]</expression>
                     <property name="dataType">decimal</property>
                 </structure>
+                <structure>
+                    <property name="name">Aggregation</property>
+                    <text-property name="displayName">Igst</text-property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["igst"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
             </list-property>
             <column id="81">
-                <property name="width">1in</property>
+                <property name="width">1.1354166666666667in</property>
             </column>
             <column id="82">
                 <property name="width">0.8333333333333334in</property>

@@ -22,14 +22,15 @@ public class GstInvoiceController {
 
   public void updateGstData(ActionRequest request, ActionResponse response) throws AxelorException {
     Invoice invoice = request.getContext().asType(Invoice.class);
-     List<InvoiceLine> invoiceLineList = new ArrayList<>();
+    List<InvoiceLine> invoiceLineList = new ArrayList<>();
     invoiceLineList = gstInvoiceService.updateGst(invoice);
-    response.setValue("invoiceLineList",invoiceLineList);
-    response.setValue("netIgst",invoice.getNetIgst());
-    response.setValue("netSgst",invoice.getNetSgst());
-    response.setValue("netCgst",invoice.getNetCgst());
-    response.setValue("companyInTaxTotal",invoice.getCompanyInTaxTotal());
-    response.setValue("companyInTaxTotalRemaining",invoice.getCompanyInTaxTotalRemaining());
+    response.setValue("invoiceLineList", invoiceLineList);
+    response.setValue("netIgst", invoice.getNetIgst());
+    response.setValue("netSgst", invoice.getNetSgst());
+    response.setValue("netCgst", invoice.getNetCgst());
+    response.setValue("companyInTaxTotal", invoice.getCompanyInTaxTotal());
+    response.setValue("companyInTaxTotalRemaining", invoice.getCompanyInTaxTotalRemaining());
+    response.setValue("amountRemaining", invoice.getAmountRemaining());
   }
 
   public void printInvoice(ActionRequest request, ActionResponse response) throws AxelorException {

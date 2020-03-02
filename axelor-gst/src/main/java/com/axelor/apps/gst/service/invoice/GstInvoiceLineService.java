@@ -8,5 +8,4 @@ public interface GstInvoiceLineService {
   public InvoiceLine calculateInvoiceLineGst(InvoiceLine invoiceLine, boolean isIgst);
 
   public boolean checkIsState(Invoice invoice);
-
 }

@@ -17,12 +17,14 @@ public class GstInvoiceLineController {
     Invoice invoice = request.getContext().getParent().asType(Invoice.class);
     boolean isIgst;
     if (gstInvoiceLineService.checkIsState(invoice)) {
-    	isIgst = !invoice.getAddress().getState().equals(invoice.getCompany().getAddress().getState()) ? true
-				: false;
-        invoiceLine = gstInvoiceLineService.calculateInvoiceLineGst(invoiceLine, isIgst);
-        response.setValue("igst", invoiceLine.getIgst());
-        response.setValue("cgst", invoiceLine.getCgst());
-        response.setValue("sgst", invoiceLine.getSgst());
+      isIgst =
+          !invoice.getAddress().getState().equals(invoice.getCompany().getAddress().getState())
+              ? true
+              : false;
+      invoiceLine = gstInvoiceLineService.calculateInvoiceLineGst(invoiceLine, isIgst);
+      response.setValue("igst", invoiceLine.getIgst());
+      response.setValue("cgst", invoiceLine.getCgst());
+      response.setValue("sgst", invoiceLine.getSgst());
 
     } else {
       response.setValue("product", null);

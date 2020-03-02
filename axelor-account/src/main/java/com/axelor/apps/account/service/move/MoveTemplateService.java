@@ -85,7 +85,6 @@ public class MoveTemplateService {
     moveTemplateRepo.save(moveTemplate);
   }
 
-  @SuppressWarnings("unchecked")
   @Transactional(rollbackOn = {Exception.class})
   public List<Long> generateMove(
       MoveTemplateType moveTemplateType,
@@ -103,7 +102,8 @@ public class MoveTemplateService {
     return new ArrayList<>();
   }
 
-  @Transactional(rollbackOn = {Exception.class})
+  @SuppressWarnings("unchecked")
+@Transactional(rollbackOn = {Exception.class})
   public List<Long> generateMove(MoveTemplate moveTemplate, List<HashMap<String, Object>> dataList)
       throws AxelorException {
     List<Long> moveList = new ArrayList<Long>();

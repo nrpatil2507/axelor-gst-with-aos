@@ -14,8 +14,9 @@ import com.axelor.apps.base.db.Product;
 import com.axelor.apps.base.service.PartnerService;
 import com.axelor.apps.base.service.alarm.AlarmEngineService;
 import com.axelor.apps.businessproject.service.InvoiceServiceProjectImpl;
+import com.axelor.apps.gst.exception.IExceptionMessage;
 import com.axelor.exception.AxelorException;
-import com.axelor.inject.Beans;
+import com.axelor.i18n.I18n;
 import com.google.inject.Inject;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -50,15 +51,15 @@ public class GstInvoiceServiceImpl extends InvoiceServiceProjectImpl implements 
 				cgst = cgst.add(invoiceLine.getCgst());
 			}
 		}
-		taxTotal = taxTotal.add(igst).add(cgst).add(cgst);
+		taxTotal = taxTotal.add(igst).add(cgst).add(cgst).setScale(2);
 		invoice.setNetIgst(igst.setScale(2));
 		invoice.setNetSgst(cgst.setScale(2));
 		invoice.setNetCgst(cgst.setScale(2));
-		invoice.setTaxTotal(taxTotal.setScale(2, BigDecimal.ROUND_HALF_UP));
-		invoice.setInTaxTotal(invoice.getExTaxTotal().add(taxTotal).setScale(2, BigDecimal.ROUND_HALF_UP));
-		invoice.setCompanyInTaxTotal(
-				invoice.getCompanyExTaxTotal().add(taxTotal).setScale(2, BigDecimal.ROUND_HALF_UP));
-		invoice.setCompanyInTaxTotalRemaining(invoice.getCompanyExTaxTotal().add(taxTotal).setScale(2, BigDecimal.ROUND_HALF_UP));
+		
+		invoice.setTaxTotal(taxTotal);
+		invoice.setAmountRemaining(invoice.getAmountRemaining().add(taxTotal));
+		invoice.setInTaxTotal(invoice.getExTaxTotal().add(taxTotal));
+		invoice.setCompanyInTaxTotalRemaining(invoice.getCompanyInTaxTotal().add(taxTotal));
 		return invoice;
 	}
 
@@ -76,7 +77,7 @@ public class GstInvoiceServiceImpl extends InvoiceServiceProjectImpl implements 
 				for (InvoiceLine invoiceLine : invoiceLineList) {
 					gstAmount = invoiceLine.getExTaxTotal().multiply(invoiceLine.getGstRate())
 							.divide(new BigDecimal(100));
-					if (Beans.get(GstInvoiceLineServiceImpl.class).checkIsState(invoice)) {
+					if (gstInvoiceLineService.checkIsState(invoice)) {
 						if (invoice.getCompany().getAddress().getState() == invoice.getAddress().getState()) {
 							invoiceCgst = gstAmount.divide(new BigDecimal(2));
 						} else {
@@ -91,6 +92,10 @@ public class GstInvoiceServiceImpl extends InvoiceServiceProjectImpl implements 
 				
 				invoice.setInvoiceLineList(invoiceline);
 				invoice=this.compute(invoice);
+			}
+			else
+			{
+				throw new AxelorException(1,String.format(I18n.get(IExceptionMessage.PARTNER_DATA)));
 			}
 		}
 		return invoiceline;

@@ -9,13 +9,25 @@
 		onNew="default-address-record" width="large" extension="true">
 		<extend target="//field[@name='zip']">
 			<insert position="after">
-				<field name="state" form-view="state-form" required="true" if="__config__.app.isApp('gst')"/>
+				<field name="state" form-view="state-form" required="true"
+					if="__config__.app.isApp('gst')" />
 			</insert>
 		</extend>
-
 		<extend target="//field[@name='addressL7Country']">
 			<insert position="before">
 				<field name="type" if="__config__.app.isApp('gst')" />
+			</insert>
+		</extend>
+	</form>
+
+	<form name="address-partner-address-form" title="Address"
+		model="com.axelor.apps.base.db.Address" id="gst-address-partner-address-form"
+		onSave="action-group-base-address-onsave,save,action-base-address-method-create-partner-address,action-base-address-method-update-lat-long"
+		onNew="default-address-record" width="large" extension="true">
+		<extend target="//field[@name='addressL6']">
+			<insert position="before">
+				<field name="state" form-view="state-form" required="true"
+					if="__config__.app.isApp('gst')" colSpan="12" />
 			</insert>
 		</extend>
 	</form>

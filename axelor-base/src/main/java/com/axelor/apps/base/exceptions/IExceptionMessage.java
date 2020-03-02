@@ -223,9 +223,9 @@ public interface IExceptionMessage {
       "Email address already linked with another partner" /*)*/;
 
   /** Product controller */
-  public static final String PRODUCT_1 = /*$$(*/ "Variants generated" /*)*/;
 
   public static final String PRODUCT_2 = /*$$(*/ "Prices updated" /*)*/;
+  public static final String PRODUCT_1 = /*$$(*/ "Variants generated" /*)*/;
   static final String PRODUCT_NO_ACTIVE_COMPANY = /*$$(*/
       "No active company for this user, please define an active company." /*)*/;
 
