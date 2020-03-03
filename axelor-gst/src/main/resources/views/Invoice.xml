@@ -76,6 +76,9 @@
 					onClick="action-invoice-method-print-invoice" showIf="id"
 					if="__config__.app.isApp('gst')" />
 			</insert>
+			<insert position="after">
+			<button name="importBtn" title="import Product" onClick="action-view-open-wizard-form" showIf="id" if="__config__.app.isApp('gst')"/>
+			</insert>
 		</extend>
 
 	</form>
@@ -121,4 +124,26 @@
 		<action name="action-invoice-method-set-selected-product-in-invoice"
 			if="__config__.app.isApp('gst')" />
 	</action-group>
+	
+	
+	<form model="com.axelor.apps.account.db.Invoice" title="Import" name="wizard-import-product-form">
+	<panel name="wizard-panel">
+	<field name="metaFile" title="input file" widget="binary-link" type="many-to-one" target="com.axelor.meta.db.MetaFile"/>
+	<button name="importBtn" title="Import" readonlyIf="metaFile == null" onClick="action-invoice-method-import-invoice-line-data,close"/>
+	</panel>
+	</form>
+		
+	<action-view name="action-view-open-wizard-form" title="action import" model="com.axelor.apps.account.db.Invoice">
+	<view type="form" name="wizard-import-product-form"/>
+	<view-param name="width" value="800"/>
+	<view-param name="popup" value="true"/>
+	<view-param name="popup" value="reload"/>
+	<view-param name="popup-save" value="false"/>
+	<view-param name="show-toolbar" value="false"/>
+	<view-param name="show-confirm" value="false"/>
+	</action-view>
+	
+	<action-method name="action-invoice-method-import-invoice-line-data">
+	<call class="com.axelor.apps.gst.web.GstInvoiceImportController" method="importInvoiceline"/>
+	</action-method>
 </object-views>
